@@ -1,0 +1,6 @@
+$header_height: 64px;
+.admin-sidebar {
+  & > div {
+    height: calc(100vh - $header_height);
+  }
+}

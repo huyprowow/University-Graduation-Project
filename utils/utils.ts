@@ -1,0 +1,6 @@
+import { ReadonlyURLSearchParams } from "next/navigation";
+
+export function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
