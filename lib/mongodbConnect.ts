@@ -24,8 +24,9 @@ async function mongodbConnect() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      // wtimeoutMS: 25000, //doi het thoi gian (wait time out):  25000ms
+      // useNewUrlParser: true,
+      // useUnifiedTopology: true,
     };
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       return mongoose;

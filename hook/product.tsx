@@ -1,21 +1,37 @@
 import { useProductStore } from "@/store/product";
+import { useSearchStore } from "@/store/search";
 import { useState } from "react";
 
 export const useProduct = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const { product, setProduct } = useProductStore((state) => state);
+  const { search, setSearch } = useSearchStore();
+  const {
+    product,
+    setProduct,
+    setCountProduct,
+    currentProduct,
+    similarProduct,
+    setCurrentProduct,
+    setSimilarProduct,
+    countProduct,
+  } = useProductStore((state) => state);
   const createNewProduct = async (newProductFormData: any) => {
-    const response = await fetch("/api/product", {
-      method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      body: newProductFormData,
-    });
-    if (response) {
-      const data = await response.json();
-      console.log(data);
-      getProduct();
+    try {
+      setLoading(true);
+      const response = await fetch("/api/product", {
+        method: "POST",
+        body: newProductFormData,
+      });
+      if (response) {
+        const data = await response.json();
+        console.log(data);
+
+        getProduct();
+      }
+    } catch (error: any) {
+      throw new Error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -24,9 +40,6 @@ export const useProduct = () => {
       setLoading(true);
       const response = await fetch("/api/product", {
         method: "PUT",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
         body: updateProductFormData,
       });
       if (response) {
@@ -43,18 +56,22 @@ export const useProduct = () => {
 
   const getProduct = async () => {
     try {
-      setLoading(true);
-      const response = await fetch("/api/product", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const { page, limit, query,category,brand } = search;
+
+      const response = await fetch(
+        `/api/product?page=${page}&limit=${limit}&query=${query ?? ""}&category=${category?? ""}&brand=${brand?? ""}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response) {
         const data = await response.json();
-        console.log(data);
         setProduct(data.data);
+        setCountProduct(data.count);
       }
     } catch (error) {
       console.log(error);
@@ -74,8 +91,27 @@ export const useProduct = () => {
 
       if (response) {
         const data = await response.json();
-        console.log(data);
-        setProduct(data.data);
+        setCurrentProduct(data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const getSimilarProductById = async (id: string) => {
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/product/${id}/similar`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response) {
+        const data = await response.json();
+        setSimilarProduct(data.data);
       }
     } catch (error) {
       console.log(error);
@@ -99,6 +135,7 @@ export const useProduct = () => {
       if (response) {
         const data = await response.json();
         console.log(data);
+        getProduct();
       }
     } catch (error: any) {
       throw new Error(error);
@@ -110,10 +147,17 @@ export const useProduct = () => {
   return {
     loading,
     product,
+    countProduct,
+    currentProduct,
+    similarProduct,
     setLoading,
     updateProduct,
     getProduct,
     createNewProduct,
     deleteProduct,
+    getProductById,
+    getSimilarProductById,
+    search,
+    setSearch,
   };
 };

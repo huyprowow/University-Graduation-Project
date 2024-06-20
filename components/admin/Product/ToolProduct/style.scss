@@ -13,3 +13,9 @@
   #btn {
   }
 }
+#tool_product-content {
+  model-viewer {
+    height: calc(100% - 37px);
+    width: auto;
+  }
+}

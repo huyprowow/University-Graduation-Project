@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export const useCategory = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const { category, setCategory } = useCategoryStore((state) => state);
+  const { category, setCategory,currentCategory, setCurrentCategory } = useCategoryStore((state) => state);
   const createNewCategory = async (newCategory: Omit<ICategory, "_id">) => {
     const response = await fetch("/api/category", {
       method: "POST",
@@ -94,5 +94,7 @@ export const useCategory = () => {
     getCategory,
     createNewCategory,
     deleteCategory,
+    currentCategory,
+     setCurrentCategory
   };
 };

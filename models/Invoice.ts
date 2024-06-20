@@ -3,10 +3,11 @@ const Schema = mongoose.Schema;
 const InvoiceSchema = new Schema(
   {
     email: { type: String, required: true },
-    name: { type: String, required: true },
-    price: { type: Number, required: true },
-    number: { type: Number, required: true },
+    quantity: { type: Number, required: true },
     address: { type: String, required: true },
+    date: { type: Date, default: Date.now },
+    paid: { type: Boolean,require:true},
+    product: { type: Schema.Types.ObjectId, ref: "Product" },
   },
   { collection: "Invoice" }
 );
@@ -14,4 +15,5 @@ const InvoiceSchema = new Schema(
 InvoiceSchema.virtual("url").get(function () {
   return "/api/invoice/" + this._id;
 });
-export default mongoose.models.Invoice || mongoose.model("Invoice", InvoiceSchema, "Invoice");
+export default mongoose.models.Invoice ||
+  mongoose.model("Invoice", InvoiceSchema, "Invoice");

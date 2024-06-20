@@ -1,4 +1,7 @@
 "use client";
+import { useBrand } from "@/hook/brand";
+import { useCategory } from "@/hook/category";
+import { useProduct } from "@/hook/product";
 import {
   Avatar,
   Button,
@@ -18,16 +21,35 @@ import {
 } from "@nextui-org/react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
-import Logo from "../public/logo.png";
-import { SearchIcon } from "./Icons/SearchIcon";
+import Logo from "../../public/logo.png";
+import { SearchIcon } from "../Icons/SearchIcon";
 
 const HeaderNavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const { search, setSearch } = useProduct();
+  const { currentCategory } = useCategory();
+  const { currentBrand } = useBrand();
+  const { query } = search;
+  const router = useRouter();
+
   const { data: session } = useSession();
-
-  const menuItems = ["Features", "Customers", "Integrations"];
-
+  const menuItems = [
+    { name: "Product", path: "product?search=&category=&brand=" },
+  ];
+  const onChangeSearch = (e) => {
+    console.log(e.target.value);
+    setSearch({
+      ...search,
+      query: e.target.value,
+    });
+    router.push(
+      `/product?search=${e.target.value}&category=${
+        currentCategory._id ? currentCategory._id : ""
+      }&brand=${currentBrand._id ? currentBrand._id : ""}`
+    );
+  };
   return (
     <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent className="sm:hidden" justify="start">
@@ -65,8 +87,8 @@ const HeaderNavBar = () => {
         </Link>
         {menuItems.map((item, idx) => (
           <NavbarItem key={idx}>
-            <Link color="foreground" href="#">
-              {item}
+            <Link color="foreground" href={`/${item.path}`}>
+              {item.name}
             </Link>
           </NavbarItem>
         ))}
@@ -81,10 +103,12 @@ const HeaderNavBar = () => {
             inputWrapper:
               "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
           }}
+          value={query}
           placeholder="Type to search..."
           size="sm"
           startContent={<SearchIcon size={18} />}
           type="search"
+          onChange={onChangeSearch}
         />
         {session ? (
           <Dropdown placement="bottom-end">
@@ -104,7 +128,7 @@ const HeaderNavBar = () => {
                 <p className="font-semibold">Signed in as</p>
                 <p className="font-semibold">{session.user?.email}</p>
               </DropdownItem>
-              <DropdownItem key="settings">
+              <DropdownItem key="admin">
                 <Link
                   className="m-0 block h-full w-full"
                   color="foreground"
@@ -133,7 +157,15 @@ const HeaderNavBar = () => {
           </Dropdown>
         ) : (
           <NavbarItem>
-            <Button as={Link} onPress={() => signIn("google")} variant="flat">
+            <Button
+              as={Link}
+              onPress={() =>
+                signIn("google", {
+                  callbackUrl: window.location.origin,
+                })
+              }
+              variant="flat"
+            >
               Access
             </Button>
           </NavbarItem>
@@ -143,8 +175,8 @@ const HeaderNavBar = () => {
       <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
-            <Link className="w-full" href="#" size="lg">
-              {item}
+            <Link className="w-full" href={`/${item.path}`} size="lg">
+              {item.name}
             </Link>
           </NavbarMenuItem>
         ))}

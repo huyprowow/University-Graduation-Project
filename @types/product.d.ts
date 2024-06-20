@@ -1,17 +1,17 @@
 interface IProduct {
   _id: string;
   name: string;
-  price: Number;
+  price: number;
   image: {
-    image_url: String;
-    cloudinary_public_id: String;
+    image_url: string;
+    cloudinary_public_id: string;
   };
-  status: Boolean;
-  number: Number;
-  description: String;
+  status: boolean;
+  number: number;
+  description: string;
   model: {
-    model_url: String;
-    cloudinary_public_id: String;
+    model_url: string;
+    cloudinary_public_id: string;
   };
   category: ICategory[];
   brand: IBrand[];

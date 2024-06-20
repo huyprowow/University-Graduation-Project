@@ -21,7 +21,7 @@ import {
   ModalContent,
   useDisclosure,
 } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -35,10 +35,16 @@ const Category = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [action, setAction] = useState("");
   const [id, setId] = useState("");
-  const { brand, getBrand, deleteBrand } = useBrand();
-  const { category, getCategory, deleteCategory } = useCategory();
-  const [currentBrand, setCurrentBrand] = useState<IBrand>({});
-  const [currentCategory, setCurrentCategory] = useState({});
+  const { brand, getBrand, deleteBrand, currentBrand, setCurrentBrand } =
+    useBrand();
+  const {
+    category,
+    getCategory,
+    deleteCategory,
+    currentCategory,
+    setCurrentCategory,
+  } = useCategory();
+  const [] = useState({});
   const _addCategory = () => {
     setAction("AddCategory");
     onOpen();
@@ -65,11 +71,6 @@ const Category = () => {
   const _deleteBrand = (b: IBrand) => {
     deleteBrand(b);
   };
-
-  useEffect(() => {
-    getBrand();
-    getCategory();
-  }, []);
   return (
     <>
       <Grid container spacing={2} className="h-full w-full">

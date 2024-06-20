@@ -59,6 +59,7 @@ const options: AuthOptions = {
       session.user.role = token.role;
       return session;
     },
+   
   },
   secret: process.env.NEXTAUTH_SECRET, // Add a secret for better security
 };

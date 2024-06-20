@@ -1,9 +1,11 @@
 import AuthProvider from "@/components/AuthProvider";
-import HeaderNavBar from "@/components/HeaderNavBar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import UIProvider from "./(client)/_lib/UIProvider";
 import "./globals.css";
+import Script from "next/script";
+import HeaderNavBar from "@/components/Share/HeaderNavBar";
+import FooterPage from "@/components/Share/FooterPage";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,11 +25,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} h-screen`}>
+      <Script
+        type="module"
+        src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"
+      ></Script>
+       <Script async src="https://kit.fontawesome.com/6310d1a086.js" ></Script>
+      <body
+        className={`${inter.className}`}
+        style={{ height: "calc(100% - 65px)" }}
+      >
         <UIProvider>
           <AuthProvider session={Session}>
             <HeaderNavBar />
             {children}
+            <FooterPage/>
           </AuthProvider>
         </UIProvider>
       </body>

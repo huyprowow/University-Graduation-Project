@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export const useBrand = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const { brand, setBrand } = useBrandStore((state) => state);
+  const { brand, setBrand ,currentBrand, setCurrentBrand} = useBrandStore((state) => state);
   const createNewBrand = async (newBrand: Omit<IBrand, "_id">) => {
     const response = await fetch("/api/brand", {
       method: "POST",
@@ -96,5 +96,7 @@ export const useBrand = () => {
     getBrand,
     createNewBrand,
     deleteBrand,
+    currentBrand,
+     setCurrentBrand
   };
 };

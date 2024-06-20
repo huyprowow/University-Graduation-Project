@@ -1,0 +1,14 @@
+#product_detail {
+  #product-image_model {
+    model-viewer {
+      min-height: 500px;
+      width: auto;
+    }
+  }
+  .carousel-container {
+    .react-multi-carousel-item {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
