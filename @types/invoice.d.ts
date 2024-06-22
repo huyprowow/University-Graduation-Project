@@ -7,3 +7,6 @@ interface IInvoice {
   paid: Boolean;
   product: IProduct;
 }
+interface IInvoiceRequest extends IInvoice {
+  mode: "pay" | "update";
+}

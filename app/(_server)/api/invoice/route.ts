@@ -1,7 +1,10 @@
+import { EmailTemplate } from "@/components/email-template";
 import mongodbConnect from "@/lib/mongodbConnect";
 import Invoice from "@/models/Invoice";
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
+const resend = new Resend(process.env.RESEND_API_KEY);
 const handlerAddInvoice = async (req: Request, res: Response) => {
   try {
     await mongodbConnect();
@@ -16,6 +19,15 @@ const handlerAddInvoice = async (req: Request, res: Response) => {
       product,
     });
     const savedInvoice = await newInvoice.save();
+
+    const { data, error } = await resend.emails.send({
+      from: "IAStore <onboarding@resend.dev>",
+      to: [email],
+      subject: "Thank for ordering",
+      react: EmailTemplate({
+        message: `Thank you for ordering ${quantity} product ${product.name}`,
+      }),
+    });
 
     return NextResponse.json(
       { success: true, data: savedInvoice },
@@ -65,6 +77,7 @@ const handlerUpdateInvoice = async (req: Request, res: Response) => {
       address,
       paid,
       product,
+      mode,
     }: {
       _id: string;
       email: string;
@@ -72,7 +85,22 @@ const handlerUpdateInvoice = async (req: Request, res: Response) => {
       address: string;
       paid: boolean;
       product: string;
+      mode: "pay" | "update";
     } = await req.json();
+
+    if (paid === true) {
+      console.log("pay");
+      if (mode === "pay") {
+        const { data, error } = await resend.emails.send({
+          from: "IAStore <onboarding@resend.dev>",
+          to: [email],
+          subject: "Payment success",
+          react: EmailTemplate({
+            message: `Payment success for invoice ${_id}`,
+          }),
+        });
+      }
+    }
 
     const updatedInvoice = await Invoice.findByIdAndUpdate(
       _id,
@@ -137,7 +165,6 @@ const handlerDeleteInvoice = async (req: Request, res: Response) => {
     );
   }
 };
-
 export {
   handlerDeleteInvoice as DELETE,
   handlerGetInvoices as GET,

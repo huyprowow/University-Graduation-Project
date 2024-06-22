@@ -14,14 +14,18 @@ const Success = () => {
         atob(localStorage.getItem("invoice_Encode") as string)
       );
       console.log(invoice);
-      updateInvoice({
-        _id: invoice._id,
-        address: invoice.address,
-        quantity: invoice.quantity,
-        email: invoice.email,
-        product: invoice.product,
-        paid: true,
-      } as IInvoice);
+      const res = updateInvoice(
+        {
+          _id: invoice._id,
+          address: invoice.address,
+          quantity: invoice.quantity,
+          email: invoice.email,
+          product: invoice.product,
+          paid: true,
+          mode: "pay",
+        } as IInvoiceRequest,
+        "pay"
+      );
     }
   }, []);
   const goHome = () => {

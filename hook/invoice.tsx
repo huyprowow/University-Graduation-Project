@@ -21,14 +21,17 @@ export const useInvoice = () => {
       const data = await response.json();
       console.log(data);
       if (data.data._id && callback) {
-        localStorage.setItem("0OP",data.data._id?btoa(JSON.stringify(data.data)):"");78/
+        localStorage.setItem(
+          "invoice_Encode",
+          data.data._id ? btoa(JSON.stringify(data.data)) : ""
+        );
         callback(data, currentProduct);
       }
       // getInvoice();
     }
   };
 
-  const updateInvoice = async (updateInvoice: IInvoice) => {
+  const updateInvoice = async (updateInvoice: IInvoiceRequest, type = "") => {
     try {
       setLoading(true);
       const response = await fetch("/api/invoice", {
@@ -41,6 +44,9 @@ export const useInvoice = () => {
       if (response) {
         const data = await response.json();
         console.log(data);
+        if (type == "pay") {
+          localStorage.removeItem("invoice_Encode");
+        }
         getInvoice();
       }
     } catch (error: any) {
