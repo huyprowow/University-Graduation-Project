@@ -1,5 +1,7 @@
+import InvoiceTable from "@/components/Share/InvoiceTable/InvoiceTable";
+
 const Invoice = () => {
-  return <div>Invoice</div>;
+  return <InvoiceTable mode="admin" />;
 };
 
 export default Invoice;

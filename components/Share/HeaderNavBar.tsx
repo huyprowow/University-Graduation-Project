@@ -128,13 +128,24 @@ const HeaderNavBar = () => {
                 <p className="font-semibold">Signed in as</p>
                 <p className="font-semibold">{session.user?.email}</p>
               </DropdownItem>
-              <DropdownItem key="admin">
+              {session?.user?.role === "admin" ? (
+                <DropdownItem key="admin">
+                  <Link
+                    className="m-0 block h-full w-full"
+                    color="foreground"
+                    href="/admin"
+                  >
+                    Admin
+                  </Link>
+                </DropdownItem>
+              ) : null}
+              <DropdownItem key="order">
                 <Link
                   className="m-0 block h-full w-full"
                   color="foreground"
-                  href="/admin"
+                  href="/order"
                 >
-                  Admin
+                  My Order
                 </Link>
               </DropdownItem>
 

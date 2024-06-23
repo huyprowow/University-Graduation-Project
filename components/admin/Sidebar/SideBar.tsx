@@ -48,9 +48,9 @@ const SideBar = () => {
           }
         />
         <Tab
-          key="/admin/order"
-          id="/admin/order"
-          href="/admin/order"
+          key="/admin/invoice"
+          id="/admin/invoice"
+          href="/admin/invoice"
           title={
             <Tooltip content="Order">
               <EditNoteIcon />

@@ -44,7 +44,6 @@ export default function Home() {
   if (!session) {
     return <></>;
   }
-
   return (
     <>
       <Banner></Banner>
