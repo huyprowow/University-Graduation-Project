@@ -41,9 +41,9 @@ export default function Home() {
     getProduct();
   }, [page,limit,query]);
 
-  if (!session) {
-    return <></>;
-  }
+  // if (!session) {
+  //   return <></>;
+  // }
   return (
     <>
       <Banner></Banner>
