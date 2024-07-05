@@ -201,7 +201,11 @@ const ProductTable = () => {
             </>
           );
         case "description":
-          return <div className="h-[200px] min-w-[300px] flex align-middle items-center">{cellValue}</div>;
+          return (
+            <div className="h-[200px] min-w-[300px] flex align-middle items-center">
+              {cellValue}
+            </div>
+          );
 
         default:
           return cellValue;
@@ -383,7 +387,7 @@ const ProductTable = () => {
         />
       </div>
     );
-  }, [product.length, page, pages, hasSearchFilter]);
+  }, [product?.length, page, pages, hasSearchFilter]);
 
   return (
     <>
