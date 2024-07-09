@@ -62,12 +62,12 @@ if you release and have public domain it works normally ( set it in google conso
 
 
 # III. Use case, DB, Architecture
-1. Use case
+1. Use case  
   ![use case](./docs/UseCase.png)
-2. DB
-   * Mongodb
+2. DB  
+   * Mongodb  
     ![Mongodb](./docs/MongoDb.png)
-   * Milvus
+   * Milvus  
     ![Milvus](./docs/MilvusDb.png)
-3. Architecture
+3. Architecture  
   ![Architecture](./docs/Architecture.png)
