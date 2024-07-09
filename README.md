@@ -41,7 +41,7 @@ change .env-example.local to .env.local fill all env value by your own
 * CLOUDINARY_CLOUD_NAME: your CLOUDINARY_CLOUD_NAME (Find out how to do it yourself create app....) [cloudinary console](https://console.cloudinary.com/) 
   
 * NEXTAUTH_URL: url access in browser example [http://localhost:3000](http://localhost:3000)
-* 
+
 * HUGGING_FACE_TOKEN: hugging face token use to call hugging face embedding vector model create your token and fill it (Find out how to do it yourself ...) [hugging face](https://huggingface.co/settings/tokens)
   * i used model ```all-MiniLM-L6-v2``` (apache-2.0 license) you can train your model and change it 
 
@@ -53,7 +53,7 @@ change .env-example.local to .env.local fill all env value by your own
 * 1. milvusdb: from root folder run compose : ```docker compose up -d```
 * 2. app from root folder run ```npm run dev```
   
-# NOTE:
+### NOTE:
 if you in develop and you can't login google by phone (because it can't access to local ip address) in desktop your can
   1. connect laptop (pc) and mobile same wifi 
   2. use nip.io to map dns laptop pc (set NEXTAUTH_URL like http://[ip address].nip.io:3000) replace "[ip address]" by ip get from ifconfig or ipconfig 
