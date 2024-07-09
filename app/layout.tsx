@@ -1,11 +1,11 @@
 import AuthProvider from "@/components/AuthProvider";
+import FooterPage from "@/components/Share/FooterPage";
+import HeaderNavBar from "@/components/Share/HeaderNavBar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import UIProvider from "./(client)/_lib/UIProvider";
 import "./globals.css";
-import Script from "next/script";
-import HeaderNavBar from "@/components/Share/HeaderNavBar";
-import FooterPage from "@/components/Share/FooterPage";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +29,7 @@ export default function RootLayout({
         type="module"
         src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"
       ></Script>
-       <Script async src="https://kit.fontawesome.com/6310d1a086.js" ></Script>
+      <Script async src="https://kit.fontawesome.com/6310d1a086.js"></Script>
       <body
         className={`${inter.className}`}
         style={{ height: "calc(100% - 65px)" }}
@@ -38,7 +38,7 @@ export default function RootLayout({
           <AuthProvider session={Session}>
             <HeaderNavBar />
             {children}
-            <FooterPage/>
+            <FooterPage />
           </AuthProvider>
         </UIProvider>
       </body>
