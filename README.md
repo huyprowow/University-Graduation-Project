@@ -20,8 +20,8 @@ link git: https://github.com/huyprowow/University-Graduation-Project
 
 # I. Set up
 change .env-example.local to .env.local fill all env value by your own  
-| Variable Name          | Example value                      | Description                                                                                                                                    |
-|------------------------|------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| Variable Name          | Example value                      | Description                                                             |
+|------------------------|------------------------------------|-------------------------------------------------------------------------|
 | MILVUS_DB_ADDRESS|```localhost:19530```| milvus database use to connecting (example is ```localhost:19530``` if your run by docker-compose.yaml and not change it) or your own address|
 |MILVUS_URL|http://localhost:19530|<p> milvus database url using in docker-compose.yaml for web view database <br> - you can go to [http://localhost:8000](http://localhost:8000) when fill all value env to view (```default``` database and user and password is empty) after run docker compose <br> - example value is [http://localhost:19530](http://localhost:19530) if your run by docker-compose.yaml and not change it</p>|
 | MINIO_ACCESS_KEY|minioadmin| account to login minio aws s3  object storage (image,pdf,...) for milvus <br> - you can go to [http://localhost:9001](http://localhost:9001) when fill all value env to view after run docker compose|
@@ -29,7 +29,7 @@ change .env-example.local to .env.local fill all env value by your own
 | GOOGLE_CLIENT_ID| | GOOGLE_CLIENT_ID get from [google console](https://console.cloud.google.com/) (Find out how to do it yourself create app and set auth....)|
 | GOOGLE_CLIENT_SECRET| | GOOGLE_CLIENT_SECRET get from [google console](https://console.cloud.google.com/) (Find out how to do it yourself create app and set auth....)|
 | CALLBACK_URL| ```http://localhost:3000/api/auth/callback/google```| call back url google login  <br> - example is: http://localhost:3000/api/auth/callback/google <br> - you need add this to authorized Authorized redirect URIs in credenticall google (http://localhost:3000/api/auth/callback/google) <br> - and Authorized JavaScript origins (http://localhost:3000)|
-|NEXTAUTH_SECRET| sup3r_s3cr3ct| secrect string for security auth set what ever your want|
+|NEXTAUTH_SECRET| sup3rs3cr3ct| secrect string for security auth set what ever your want|
 |MONGODB_URI| |  mongodb database use to connecting|
 |ADMIN_EMAIL| | email who you want to administrator role (i set my email :v)|
 |NEXT_API_URL| | base api url example is ```http://localhost:3000/api```|
