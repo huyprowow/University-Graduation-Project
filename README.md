@@ -20,8 +20,8 @@ link git: https://github.com/huyprowow/University-Graduation-Project
 
 # I. Set up
 change .env-example.local to .env.local fill all env value by your own  
-| Variable Name          | Example value                      | Description                                                             |
-|------------------------|------------------------------------|-------------------------------------------------------------------------|
+| Variable Name          | Example value                      | Description                                                                                                                                    |
+|------------------------|------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
 | MILVUS_DB_ADDRESS|```localhost:19530```| milvus database use to connecting (example is ```localhost:19530``` if your run by docker-compose.yaml and not change it) or your own address|
 |MILVUS_URL|http://localhost:19530|<p> milvus database url using in docker-compose.yaml for web view database <br> - you can go to [http://localhost:8000](http://localhost:8000) when fill all value env to view (```default``` database and user and password is empty) after run docker compose <br> - example value is [http://localhost:19530](http://localhost:19530) if your run by docker-compose.yaml and not change it</p>|
 | MINIO_ACCESS_KEY|minioadmin| account to login minio aws s3  object storage (image,pdf,...) for milvus <br> - you can go to [http://localhost:9001](http://localhost:9001) when fill all value env to view after run docker compose|
