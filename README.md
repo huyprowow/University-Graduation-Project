@@ -19,7 +19,7 @@ link git: https://github.com/huyprowow/University-Graduation-Project
 * docker installed
 
 # I. Set up
-change .env-example.local to .env.local fill all env value by your own  
+change .env_example.local to .env.local fill all env value by your own  
 | Variable Name          | Example value                      | Description                                                             |
 |------------------------|------------------------------------|-------------------------------------------------------------------------|
 | MILVUS_DB_ADDRESS|```localhost:19530```| milvus database use to connecting (example is ```localhost:19530``` if your run by docker-compose.yaml and not change it) or your own address|
