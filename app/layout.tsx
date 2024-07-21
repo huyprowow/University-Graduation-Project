@@ -4,7 +4,7 @@ import HeaderNavBar from "@/components/Share/HeaderNavBar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
-import UIProvider from "./(client)/_lib/UIProvider";
+import UIProvider from "./_lib/UIProvider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
