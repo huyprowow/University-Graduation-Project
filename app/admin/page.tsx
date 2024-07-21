@@ -58,7 +58,7 @@ type OrdersByDayChartProps = {
   const { loading, overview, getOverview } = useOverview();
   useEffect(() => {
     getOverview();
-  }, [overview?.length]);
+  }, []);
 
   console.log(session);
   return (

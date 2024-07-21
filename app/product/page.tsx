@@ -6,7 +6,7 @@ import { useCategory } from "@/hook/category";
 import { useProduct } from "@/hook/product";
 import { Typography } from "@mui/material";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 const Product = () => {
   const searchParam = useSearchParams();
   const valueSearch = searchParam.get("search") ?? "";
@@ -67,5 +67,10 @@ const Product = () => {
     </>
   );
 };
+const ProductWrap =()=> (
+  <Suspense>
+    <Product />
+  </Suspense>
+);
 
-export default Product;
+export default ProductWrap;

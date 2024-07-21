@@ -15,7 +15,7 @@ export async function POST(req: Request, res: Response) {
       to: [email],
       subject: title,
       react: EmailTemplate({ message }),
-    });
+    } as any);
 
     if (error) {
       return NextResponse.json({ error }, { status: 500 });

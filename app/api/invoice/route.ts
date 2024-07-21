@@ -27,7 +27,7 @@ const handlerAddInvoice = async (req: Request, res: Response) => {
       react: EmailTemplate({
         message: `Thank you for ordering ${quantity} product ${product.name}`,
       }),
-    });
+    } as any);
 
     return NextResponse.json(
       { success: true, data: savedInvoice },
@@ -98,7 +98,7 @@ const handlerUpdateInvoice = async (req: Request, res: Response) => {
           react: EmailTemplate({
             message: `Payment success for invoice ${_id}`,
           }),
-        });
+        } as any);
       }
     }
 

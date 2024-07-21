@@ -93,7 +93,7 @@ const ToolProduct = (props: IProps) => {
     // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
   }, [model]);
-  const handleChange = (prop) => (event) => {
+  const handleChange = (prop:string) => (event:any) => {
     const { value, checked, files } = event.target;
     switch (prop) {
       case "image":
@@ -129,7 +129,7 @@ const ToolProduct = (props: IProps) => {
         break;
     }
   };
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event:any) => {
     event.preventDefault();
     // console.log(number, Number(price)!==0?Number(0):"", description, status, categorySelected, image, name);
 
@@ -282,9 +282,9 @@ const ToolProduct = (props: IProps) => {
             <FormControl variant="standard" fullWidth>
               <Input
                 isRequired
-                value={number}
+                value={number }
                 label="Number*"
-                onKeyPress={(event) => {
+                onKeyPress={(event:any) => {
                   if (!/[0-9]/.test(event.key)) {
                     event.preventDefault();
                   }
@@ -296,7 +296,7 @@ const ToolProduct = (props: IProps) => {
               <Input
                 isRequired
                 value={price}
-                onKeyPress={(event) => {
+                onKeyPress={(event:any) => {
                   if (!/^([0-9]{1,})?(\.)?([0-9]{1,})?$/.test(event.key)) {
                     event.preventDefault();
                   }

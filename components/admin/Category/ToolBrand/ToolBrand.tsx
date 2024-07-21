@@ -11,7 +11,7 @@ interface IProps {
 const ToolBrand = (props: IProps) => {
   const [name, setName] = useState(props.brand?.name ? props.brand?.name : "");
   const { loading, createNewBrand, updateBrand, getBrand } = useBrand();
-  const handleChange = (prop) => (event) => {
+  const handleChange = (prop:string) => (event:any) => {
     const { value, checked, files } = event.target;
     switch (prop) {
       case "name":
@@ -22,7 +22,7 @@ const ToolBrand = (props: IProps) => {
         break;
     }
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = (event:any) => {
     event.preventDefault();
     let res;
 

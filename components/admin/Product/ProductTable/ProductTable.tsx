@@ -70,7 +70,9 @@ const INITIAL_VISIBLE_COLUMNS = [
 const ProductTable = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [action, setAction] = useState("");
-  const [currentProduct, setCurrentProduct] = useState<IProduct>({});
+  const [currentProduct, setCurrentProduct] = useState<IProduct>(
+    {} as IProduct
+  );
   const [scrollBehavior, setScrollBehavior] = React.useState("inside");
   const [visibleColumns, setVisibleColumns] = React.useState(
     new Set(INITIAL_VISIBLE_COLUMNS)
@@ -96,7 +98,6 @@ const ProductTable = () => {
   const hasSearchFilter = Boolean(query);
 
   const headerColumns = React.useMemo(() => {
-    if (visibleColumns === "all") return columns;
 
     return columns.filter((column) =>
       Array.from(visibleColumns).includes(column.uid)
@@ -121,8 +122,8 @@ const ProductTable = () => {
   };
 
   const renderCell = React.useCallback(
-    (product: IProduct, columnKey: keyof IProduct) => {
-      const cellValue = product[columnKey];
+    (product: IProduct, columnKey: any) => {
+      const cellValue: any = product[columnKey as keyof IProduct] as any;
 
       switch (columnKey) {
         case "status":
@@ -130,7 +131,7 @@ const ProductTable = () => {
             <Chip
               className="capitalize"
               color={
-                statusColorMap[product.status ? "stocking" : "out of stock"]
+                statusColorMap[product.status ? "stocking" : "out of stock"] as any
               }
               size="sm"
               variant="flat"
@@ -213,7 +214,7 @@ const ProductTable = () => {
     },
     [brand, category]
   );
-  const handleDeleteProduct = (product) => {
+  const handleDeleteProduct = (product:any) => {
     deleteProduct(product);
   };
   const onNextPage = React.useCallback(() => {

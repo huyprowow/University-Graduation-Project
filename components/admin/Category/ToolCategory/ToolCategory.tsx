@@ -22,7 +22,7 @@ const ToolCategory = (props: IProps) => {
   const { loading, createNewCategory, updateCategory, getCategory } =
     useCategory();
   const { brand } = useBrand();
-  const handleChange = (prop) => (event) => {
+  const handleChange = (prop:string) => (event:any) => {
     const { value, checked, files } = event.target;
     switch (prop) {
       case "name":
@@ -34,7 +34,7 @@ const ToolCategory = (props: IProps) => {
         break;
     }
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = (event:any) => {
     event.preventDefault();
     let res;
 
@@ -43,7 +43,7 @@ const ToolCategory = (props: IProps) => {
         name: name,
         brand: brandSelected,
       };
-      res = createNewCategory(category);
+      res = createNewCategory(category as any);
     } else {
       if (props.category === undefined) {
         return;
@@ -53,7 +53,7 @@ const ToolCategory = (props: IProps) => {
         _id: props.category._id,
         brand: brandSelected,
       };
-      res = updateCategory(category);
+      res = updateCategory(category as any);
     }
     props.closeForm();
   };

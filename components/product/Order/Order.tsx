@@ -46,7 +46,7 @@ const Order = ({
     }
     setOpen(false);
   };
-  const handleChange = (prop) => (event) => {
+  const handleChange = (prop:string) => (event:any) => {
     const { value, checked, files } = event.target;
     switch (prop) {
       case "email":

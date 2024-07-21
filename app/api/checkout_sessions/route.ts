@@ -38,7 +38,7 @@ async function handlerCheckout(req: Request, res: Response) {
       cancel_url: `${process.env.NEXTAUTH_URL}/checkout/cancel`,
     });
     return NextResponse.json(session, { status: 200 });
-  } catch (err) {
+  } catch (err:any) {
     return NextResponse.json(
       { success: false, error: err },
       {
