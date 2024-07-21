@@ -12,7 +12,7 @@ type Props = {
 const AuthProvider = ({ children, session }: Props) => {
 
     return (
-        <SessionProvider session={session}> 
+        <SessionProvider session={session} basePath="/api/auth"> 
             {children}
         </SessionProvider>
     )
