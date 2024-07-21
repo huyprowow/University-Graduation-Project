@@ -85,7 +85,7 @@ const HeaderNavBar = () => {
             <p className="font-bold text-inherit ">IA Store</p>
           </NavbarBrand>
         </Link>
-        {menuItems.map((item, idx) => (
+        {menuItems?.map((item, idx) => (
           <NavbarItem key={idx}>
             <Link color="foreground" href={`/${item.path}`}>
               {item.name}
@@ -184,7 +184,7 @@ const HeaderNavBar = () => {
       </NavbarContent>
 
       <NavbarMenu>
-        {menuItems.map((item, index) => (
+        {menuItems?.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
             <Link className="w-full" href={`/${item.path}`} size="lg">
               {item.name}

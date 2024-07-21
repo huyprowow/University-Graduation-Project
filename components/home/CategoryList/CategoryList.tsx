@@ -18,19 +18,20 @@ const CategoryList = () => {
 
   return (
     <ScrollShadow
-      hideScrollBar
+      // hideScrollBar
       offset={100}
       orientation="horizontal"
       className="max-w-[400px] max-h-[300px]"
       style={{
         margin: "0 auto",
+        marginBottom: "2.5rem" /* 40px */
       }}
     >
       <Stack direction="row" className="justify-around">
         {category?.map((category) => (
           <Stack key={category._id}>
             <Button
-              className="w-[100px] h-[100px] rounded-full p-0 mb-10"
+              className="w-[100px] h-[100px] rounded-full p-0"
               id="button_category"
               onClick={()=>handleCategorySelect(category._id)}
             >

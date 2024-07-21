@@ -125,7 +125,7 @@ const Order = ({
       >
         <LocalMallIcon /> Order now
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement={"center"}>
         <ModalContent>
           {(onClose) => (
             <>

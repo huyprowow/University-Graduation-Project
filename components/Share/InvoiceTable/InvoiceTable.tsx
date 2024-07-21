@@ -38,7 +38,7 @@ const InvoiceTable = ({ mode }: { mode: "admin" | "user" }) => {
   const invoiceFilter =
     session?.user?.role === "admin"
       ? invoice
-      : invoice.filter((item) => item.email !== session?.user?.email);
+      : invoice?.filter((item) => item.email !== session?.user?.email);
   const pages = Math.ceil(invoiceFilter.length / rowsPerPage);
 
   const items = useMemo(() => {

@@ -54,15 +54,15 @@ const handlerGetSimilarProductById = async (
     // vector: any,
     // productId: string}
     const productIdSimilars = Array.from(res.results)
-      .map((item) => item.productId)
-      .filter((productId) => productId != productId_search);
+      ?.map((item) => item.productId)
+      ?.filter((productId) => productId != productId_search);
     if (productIdSimilars.length <= 0) {
       return NextResponse.json(
         { success: false, error: "Not have product similar" },
         { status: 404 }
       );
     }
-    const searchIds = productIdSimilars.map(
+    const searchIds = productIdSimilars?.map(
       (i) => new mongoose.Types.ObjectId(i)
     );
     const products = await Product.find(

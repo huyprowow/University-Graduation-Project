@@ -229,7 +229,7 @@ const ToolProduct = (props: IProps) => {
               isDisabled={categorySelected === ""}
               items={
                 categorySelected !== ""
-                  ? category.filter((c) => c._id === categorySelected)[0].brand
+                  ? category?.filter((c) => c._id === categorySelected)[0].brand
                   : brand
               }
               label="All Brand"
@@ -351,7 +351,7 @@ const ToolProduct = (props: IProps) => {
                   <img
                     src={preview}
                     alt="Preview"
-                    style={{ maxWidth: 700, maxHeight: 450 }}
+                    style={{ maxWidth: "100%", maxHeight: 450 }}
                   />
                 )}
               </Grid>
@@ -391,7 +391,7 @@ const ToolProduct = (props: IProps) => {
           <Grid container>
             <Grid item xs={10}>
               {error &&
-                error.map((err, i) => (
+                error?.map((err, i) => (
                   <span className="msg-error" key={i}>
                     {err}
                     <ClearIcon fontSize="sm" />

@@ -88,7 +88,7 @@ const Category = () => {
             </IconButton>
             {category ? (
               <Listbox>
-                {category.map((c: ICategory) => {
+                {category?.map((c: ICategory) => {
                   return (
                     <ListboxItem key={c._id}>
                       <Card>
@@ -113,7 +113,7 @@ const Category = () => {
                         </CardHeader>
                         <Divider></Divider>
                         <CardBody className="overflow-visible px-2 flex-row items-start gap-1">
-                          {c.brand.map((item) => {
+                          {c?.brand?.map((item) => {
                             return <Chip key={item._id}>{item.name}</Chip>;
                           })}
                         </CardBody>
@@ -139,7 +139,7 @@ const Category = () => {
             </IconButton>
             {brand ? (
               <Listbox>
-                {brand.map((b: IBrand) => {
+                {brand?.map((b: IBrand) => {
                   return (
                     <ListboxItem
                       key={b._id}
@@ -169,7 +169,7 @@ const Category = () => {
           </Item>
         </Grid>
       </Grid>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement={"center"}>
         <ModalContent>
           {(onClose) => (
             <>

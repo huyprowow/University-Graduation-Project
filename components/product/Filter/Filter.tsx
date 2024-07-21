@@ -68,7 +68,7 @@ const Filter = () => {
           <Radio key={""} value={""}>
             All
           </Radio>
-          {category.map((item) => (
+          {category?.map((item) => (
             <Radio key={item._id} value={item._id}>
               {item.name}
             </Radio>
