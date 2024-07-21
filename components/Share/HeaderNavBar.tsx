@@ -17,8 +17,8 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
+  Link
 } from "@nextui-org/react";
-import { Link } from '@nextui-org/link';
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -87,7 +87,7 @@ const HeaderNavBar = () => {
         </Link>
         {menuItems?.map((item, idx) => (
           <NavbarItem key={idx}>
-            <Link color="foreground" href={`/${item.path}`}>
+            <Link color="foreground" href={`/${item.path}`} >
               {item.name}
             </Link>
           </NavbarItem>

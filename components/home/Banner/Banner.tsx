@@ -48,7 +48,6 @@ const Banner = () => {
           radius="none"
           alt="banner"
           className="object-cover"
-          height={200}
           src="/banner_vr-removebg.png"
         />
       </Grid>
