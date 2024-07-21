@@ -35,12 +35,25 @@ type OrdersByDayChartProps = {
   }[];
 };
 
-export function OrdersByDayChart({ data }: OrdersByDayChartProps) {
+ function OrdersByDayChart({ data }: OrdersByDayChartProps) {
   return (
-   
+    <ResponsiveContainer width="100%" height={300}>
+      <LineChart data={data}>
+        <CartesianGrid />
+        <XAxis dataKey="date" />
+        <YAxis tickFormatter={(tick) => formatCurrency(tick)} />
+        <Tooltip formatter={(value) => formatCurrency(value as number)} />
+        <Line
+          dot={false}
+          dataKey="totalSales"
+          type="monotone"
+          name="Total Sales"
+        />
+      </LineChart>
+    </ResponsiveContainer>
   );
 }
-const Admin = () => {
+ const Admin = () => {
   const { data: session } = useSession();
   const { loading, overview, getOverview } = useOverview();
   useEffect(() => {
@@ -139,21 +152,7 @@ const Admin = () => {
             </Item>
           </Grid>
         </Grid>
-        <ResponsiveContainer width="100%" height={300}>
-      <LineChart data={overview?.dailySales}>
-        <CartesianGrid />
-        <XAxis dataKey="date" />
-        <YAxis tickFormatter={(tick) => formatCurrency(tick)} />
-        <Tooltip formatter={(value) => formatCurrency(value as number)} />
-        <Line
-          dot={false}
-          dataKey="totalSales"
-          type="monotone"
-          name="Total Sales"
-        />
-      </LineChart>
-    </ResponsiveContainer>
-       
+        <OrdersByDayChart data={overview?.dailySales} />
       </Box>
     </>
   );
