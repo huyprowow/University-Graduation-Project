@@ -57,7 +57,7 @@ const Product = () => {
 
         <span className="p-1  underline decoration-pink-600 decoration-3 underline-offset-7 ">
           {
-            brand.filter((x) => {
+            brand?.filter((x) => {
               return x._id === currentBrand._id;
             })[0]?.name
           }

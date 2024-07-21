@@ -98,7 +98,6 @@ const ProductTable = () => {
   const hasSearchFilter = Boolean(query);
 
   const headerColumns = React.useMemo(() => {
-
     return columns?.filter((column) =>
       Array.from(visibleColumns).includes(column.uid)
     );
@@ -131,7 +130,9 @@ const ProductTable = () => {
             <Chip
               className="capitalize"
               color={
-                statusColorMap[product.status ? "stocking" : "out of stock"] as any
+                statusColorMap[
+                  product.status ? "stocking" : "out of stock"
+                ] as any
               }
               size="sm"
               variant="flat"
@@ -214,7 +215,7 @@ const ProductTable = () => {
     },
     [brand, category]
   );
-  const handleDeleteProduct = (product:any) => {
+  const handleDeleteProduct = (product: any) => {
     deleteProduct(product);
   };
   const onNextPage = React.useCallback(() => {
@@ -437,6 +438,7 @@ const ProductTable = () => {
         onOpenChange={onOpenChange}
         size="full"
         scrollBehavior={"normal"}
+        placement={"center"}
       >
         <ModalContent>
           {(onClose) => (
@@ -444,7 +446,7 @@ const ProductTable = () => {
               {/* <ModalHeader className="flex flex-col gap-1">
                 
               </ModalHeader> */}
-              <ModalBody style={{overflow:"auto"}}>
+              <ModalBody style={{ overflow: "auto" }}>
                 {action == "AddProduct" ? (
                   <ToolProduct closeForm={onClose} type="CREATE" />
                 ) : action == "EditProduct" ? (

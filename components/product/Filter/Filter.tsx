@@ -5,7 +5,7 @@ import WidgetsIcon from "@mui/icons-material/Widgets";
 import { Drawer, IconButton } from "@mui/material";
 import { Radio, RadioGroup } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 const Filter = () => {
   const { category, currentCategory, setCurrentCategory } = useCategory();
   const { brand, currentBrand, setCurrentBrand } = useBrand();
@@ -68,7 +68,7 @@ const Filter = () => {
           <Radio key={""} value={""}>
             All
           </Radio>
-          {category.map((item) => (
+          {category?.map((item) => (
             <Radio key={item._id} value={item._id}>
               {item.name}
             </Radio>

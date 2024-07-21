@@ -46,7 +46,7 @@ const Order = ({
     }
     setOpen(false);
   };
-  const handleChange = (prop:string) => (event:any) => {
+  const handleChange = (prop: string) => (event: any) => {
     const { value, checked, files } = event.target;
     switch (prop) {
       case "email":
@@ -125,7 +125,7 @@ const Order = ({
       >
         <LocalMallIcon /> Order now
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement={"center"}>
         <ModalContent>
           {(onClose) => (
             <>

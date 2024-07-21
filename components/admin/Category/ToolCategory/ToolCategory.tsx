@@ -16,7 +16,7 @@ const ToolCategory = (props: IProps) => {
   );
   const [brandSelected, setBrandSelected] = useState<string[]>(
     props.category?.brand
-      ? (props.category?.brand as IBrand[]).map((i: IBrand) => i._id)
+      ? (props.category?.brand as IBrand[])?.map((i: IBrand) => i._id)
       : []
   );
   const { loading, createNewCategory, updateCategory, getCategory } =

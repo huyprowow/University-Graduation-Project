@@ -169,7 +169,7 @@ const Category = () => {
           </Item>
         </Grid>
       </Grid>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement={"center"}>
         <ModalContent>
           {(onClose) => (
             <>
