@@ -13,7 +13,7 @@ export default function AdminLayout({ children }: any) {
   useEffect(() => {
     getBrand();
     getCategory();
-  }, []);
+  }, [category?.length,brand?.length]);
   useEffect(() => {
     getProduct();
   }, [page, limit, query]);

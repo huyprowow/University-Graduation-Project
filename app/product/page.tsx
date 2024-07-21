@@ -19,7 +19,7 @@ const Product = () => {
   useEffect(() => {
     getCategory();
     getBrand();
-  }, []);
+  }, [category?.length,brand?.length]);
   useEffect(() => {
     setSearch({
       ...search,

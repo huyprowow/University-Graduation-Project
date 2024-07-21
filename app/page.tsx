@@ -27,15 +27,15 @@ async function getData() {
 export default function Home() {
   const { data: session } = useSession();
   const { product, getProduct, search } = useProduct();
-  const { getBrand } = useBrand();
-  const { getCategory } = useCategory();
+  const {brand, getBrand } = useBrand();
+  const { category,getCategory } = useCategory();
   const { page, limit, query } = search;
 
   console.log(product);
   useEffect(() => {
     getCategory();
     getBrand();
-  }, []);
+  }, [category?.length,brand?.length]);
   useEffect(() => {
     // getData();
     getProduct();
