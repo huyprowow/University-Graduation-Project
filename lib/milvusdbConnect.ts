@@ -24,7 +24,12 @@ const schema = [
 async function milvusdbConnect() {
   const address = process.env.MILVUS_DB_ADDRESS ?? "";
   // connect to milvus
-  const client: MilvusClient = new MilvusClient({ address });
+  const client: MilvusClient = new MilvusClient({
+    address,
+    username:  process.env.MILVUS_DB_USER??"",
+    password:  process.env.MILVUS_DB_PASSWORD??"",
+   token: process.env.MILVUS_DB_TOKEN??"",
+  });
   // define schema
   // create collection
   const exist = await client.hasCollection({
