@@ -285,8 +285,8 @@ export {
   handlerUpdateProduct as PUT,
 };
 // Export upload middleware for images
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// };
