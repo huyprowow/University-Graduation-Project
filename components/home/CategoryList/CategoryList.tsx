@@ -1,11 +1,19 @@
+"use client";
 import { useBrand } from "@/hook/brand";
 import { useCategory } from "@/hook/category";
 import { useProduct } from "@/hook/product";
+import { mobileAndTabletCheck } from "@/utils/utils";
 import { Divider, Stack } from "@mui/material";
 import { Button, ScrollShadow } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const CategoryList = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const isMb = mobileAndTabletCheck();
+    setIsMobile(isMb);
+  }, []);
   const { brand } = useBrand();
   const { category } = useCategory() ;
   const { search, setSearch } = useProduct();
@@ -18,7 +26,7 @@ const CategoryList = () => {
 
   return (
     <ScrollShadow
-      // hideScrollBar
+    hideScrollBar={isMobile ? true : false}
       offset={100}
       orientation="horizontal"
       className="max-w-[400px] max-h-[300px]"
