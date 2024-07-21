@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import "./page.css";
 interface ProtectedProps {
-  session?: User; // Optional session type
+  session?: any; // Optional session type
 }
 async function getData() {
   const res = await fetch(process.env.NEXT_API_URL + "user/info");
@@ -26,10 +26,10 @@ async function getData() {
 
 export default function Home() {
   const { data: session } = useSession();
-  const { product, getProduct,search } = useProduct();
+  const { product, getProduct, search } = useProduct();
   const { getBrand } = useBrand();
   const { getCategory } = useCategory();
-  const {page,limit,query}=search
+  const { page, limit, query } = search;
 
   console.log(product);
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function Home() {
   useEffect(() => {
     // getData();
     getProduct();
-  }, [page,limit,query]);
+  }, [page, limit, query]);
 
   // if (!session) {
   //   return <></>;

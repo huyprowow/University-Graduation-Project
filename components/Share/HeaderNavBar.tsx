@@ -10,7 +10,6 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Input,
-  Link,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -19,6 +18,7 @@ import {
   NavbarMenuItem,
   NavbarMenuToggle,
 } from "@nextui-org/react";
+import { Link } from '@nextui-org/link';
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -128,7 +128,7 @@ const HeaderNavBar = () => {
                 <p className="font-semibold">Signed in as</p>
                 <p className="font-semibold">{session.user?.email}</p>
               </DropdownItem>
-              {session?.user?.role === "admin" ? (
+              {(session as any)?.user?.role === "admin" ? (
                 <DropdownItem key="admin">
                   <Link
                     className="m-0 block h-full w-full"
