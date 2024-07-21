@@ -99,7 +99,7 @@ const ProductTable = () => {
 
   const headerColumns = React.useMemo(() => {
 
-    return columns.filter((column) =>
+    return columns?.filter((column) =>
       Array.from(visibleColumns).includes(column.uid)
     );
   }, [visibleColumns]);

@@ -229,7 +229,7 @@ const ToolProduct = (props: IProps) => {
               isDisabled={categorySelected === ""}
               items={
                 categorySelected !== ""
-                  ? category.filter((c) => c._id === categorySelected)[0].brand
+                  ? category?.filter((c) => c._id === categorySelected)[0].brand
                   : brand
               }
               label="All Brand"
