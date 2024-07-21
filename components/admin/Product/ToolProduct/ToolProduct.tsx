@@ -351,7 +351,7 @@ const ToolProduct = (props: IProps) => {
                   <img
                     src={preview}
                     alt="Preview"
-                    style={{ maxWidth: 700, maxHeight: 450 }}
+                    style={{ maxWidth: "100%", maxHeight: 450 }}
                   />
                 )}
               </Grid>
@@ -391,7 +391,7 @@ const ToolProduct = (props: IProps) => {
           <Grid container>
             <Grid item xs={10}>
               {error &&
-                error.map((err, i) => (
+                error?.map((err, i) => (
                   <span className="msg-error" key={i}>
                     {err}
                     <ClearIcon fontSize="sm" />
@@ -400,7 +400,7 @@ const ToolProduct = (props: IProps) => {
             </Grid>
 
             <Grid item xs={2}>
-              <Button type="submit" className="float-right">
+              <Button type="submit" className="float-right" style={{clear:'both'}}>
                 {loading ? (
                   <CircularProgress size={24.5} color="success" />
                 ) : props?.type === "UPDATE" ? (

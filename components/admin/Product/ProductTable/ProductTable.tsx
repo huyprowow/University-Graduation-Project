@@ -188,7 +188,7 @@ const ProductTable = () => {
         case "category":
           return (
             <>
-              {category.map((i) => {
+              {category?.map((i) => {
                 return i._id === cellValue[0] ? i.name : null;
               })}
             </>
@@ -196,7 +196,7 @@ const ProductTable = () => {
         case "brand":
           return (
             <>
-              {brand.map((i) => {
+              {brand?.map((i) => {
                 return i._id === cellValue[0] ? i.name : null;
               })}
             </>
@@ -307,7 +307,7 @@ const ProductTable = () => {
                 selectionMode="multiple"
                 onSelectionChange={setStatusFilter}
               >
-                {statusOptions.map((status) => (
+                {statusOptions?.map((status) => (
                   <DropdownItem key={status.uid} className="capitalize">
                     {capitalize(status.name)}
                   </DropdownItem>
@@ -330,7 +330,7 @@ const ProductTable = () => {
                 selectionMode="multiple"
                 onSelectionChange={setVisibleColumns}
               >
-                {columns.map((column) => (
+                {columns?.map((column) => (
                   <DropdownItem key={column.uid} className="capitalize">
                     {capitalize(column.name)}
                   </DropdownItem>
@@ -444,7 +444,7 @@ const ProductTable = () => {
               {/* <ModalHeader className="flex flex-col gap-1">
                 
               </ModalHeader> */}
-              <ModalBody>
+              <ModalBody style={{overflow:"auto"}}>
                 {action == "AddProduct" ? (
                   <ToolProduct closeForm={onClose} type="CREATE" />
                 ) : action == "EditProduct" ? (
