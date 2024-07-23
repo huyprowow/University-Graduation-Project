@@ -31,7 +31,7 @@ const Order = ({
   const [address, setAddress] = useState("");
   const [quantity, setQuantity] = useState("");
   const { checkoutProduct } = usePayment();
-  const { createNewInvoice } = useInvoice();
+  const { loading:invoiceLoading,createNewInvoice } = useInvoice();
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -207,6 +207,7 @@ const Order = ({
                     className="bg-pink-600 leading-16 mt-1"
                     onClick={(e) => handleOrder(e, "order")}
                     type="submit"
+                    isLoading={invoiceLoading}
                   >
                     <LocalMallIcon /> Order
                   </Button>

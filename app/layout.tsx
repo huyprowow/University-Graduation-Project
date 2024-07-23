@@ -6,7 +6,7 @@ import { Inter } from "next/font/google";
 import Script from "next/script";
 import UIProvider from "./(client)/_lib/UIProvider";
 import "./globals.css";
-
+import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

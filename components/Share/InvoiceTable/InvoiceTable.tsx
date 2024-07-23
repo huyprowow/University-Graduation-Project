@@ -1,19 +1,23 @@
 "use client";
+import { EShipmentStatus } from "@/constant/enum";
 import { useInvoice } from "@/hook/invoice";
 import { usePayment } from "@/hook/payment";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import CreditCardOffIcon from "@mui/icons-material/CreditCardOff";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import PaymentIcon from "@mui/icons-material/Payment";
+import { Stack } from "@mui/material";
 
 import {
   Button,
   Chip,
   getKeyValue,
+  Link,
   Pagination,
   Popover,
   PopoverContent,
   PopoverTrigger,
+  Spinner,
   Table,
   TableBody,
   TableCell,
@@ -34,13 +38,12 @@ const InvoiceTable = ({ mode }: { mode: "admin" | "user" }) => {
   useEffect(() => {
     getInvoice();
   }, []);
-
   const invoiceFilter =
     session?.user?.role === "admin"
       ? invoice
-      : invoice?.filter((item) => item.email !== session?.user?.email);
+      : invoice?.filter((item) => item.email === session?.user?.email);
   const pages = Math.ceil(invoiceFilter.length / rowsPerPage);
-
+  console.log(invoiceFilter);
   const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
@@ -71,6 +74,11 @@ const InvoiceTable = ({ mode }: { mode: "admin" | "user" }) => {
       mode: "update",
     });
   };
+
+  const openLink = async (link: string) => {
+    window.open(link, "_blank");
+  };
+
   const renderValue = (item, columnKey) => {
     if (columnKey === "paid") {
       return (
@@ -85,41 +93,78 @@ const InvoiceTable = ({ mode }: { mode: "admin" | "user" }) => {
       );
     } else if (columnKey === "product.name") {
       return <>{item.product.name}</>;
+    } else if (columnKey === "shipment.status") {
+      return <>{item?.shipment?.status}</>;
     } else if (columnKey === "action") {
       if (mode == "admin") {
         return (
-          <Popover placement="bottom" showArrow={true}>
-            <PopoverTrigger>
-              {item.paid ? <CreditCardOffIcon /> : <CreditScoreIcon />}
-            </PopoverTrigger>
-            <PopoverContent>
-              <div className="px-1 py-2">
-                <div className="text-small font-bold">
-                  {" "}
-                  is this {item.paid ? "not" : ""} paid?
+          <>
+            <Link
+              className="w-full"
+              href={`/shipper/${item.shipment._id}`}
+              size="lg"
+            >
+              shipping
+            </Link>
+            <Popover placement="bottom" showArrow={true}>
+              <PopoverTrigger>
+                {item.paid ? <CreditCardOffIcon /> : <CreditScoreIcon />}
+              </PopoverTrigger>
+              <PopoverContent>
+                <div className="px-1 py-2">
+                  <div className="text-small font-bold">
+                    {" "}
+                    is this {item.paid ? "not" : ""} paid?
+                  </div>
+                  <div className="text-tiny">
+                    <Button onClick={() => handleUpdateInvoice(item)}>
+                      paid
+                    </Button>
+                  </div>
                 </div>
-                <div className="text-tiny">
-                  <Button onClick={() => handleUpdateInvoice(item)}>
-                    paid
-                  </Button>
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
+              </PopoverContent>
+            </Popover>
+          </>
         );
       } else {
-        return item["paid"] === true ? null : (
-          <Button
-            isDisabled={loading}
-            fullWidth
-            className="bg-pink-600 leading-16 mt-1"
-            onClick={() => handleCheckoutProduct(item, item.product)}
-            type="submit"
-          >
-            <PaymentIcon />
-            Checkout
-            <ArrowOutwardIcon />
-          </Button>
+        return item["paid"] === true ? (
+          <></>
+        ) : (
+          <Stack direction="row" spacing={2}>
+            <Button
+              isDisabled={loading}
+              fullWidth
+              className="bg-pink-600 leading-16 mt-1"
+              onClick={() => handleCheckoutProduct(item, item.product)}
+              type="submit"
+            >
+              <PaymentIcon />
+              Checkout
+              <ArrowOutwardIcon />
+            </Button>
+            {session?.user?.role === "admin" ? (
+              <>
+                <Button
+                  fullWidth
+                  className="text-center bg-orange-600 leading-16 mt-1"
+                  onClick={() => openLink(`/shipper/${item?.shipment?._id}`)}
+                >
+                  Shipping
+                  <ArrowOutwardIcon />
+                </Button>
+              </>
+            ) : null}
+            {item?.shipment?.status === EShipmentStatus.Shipping ? (
+              <Button
+                fullWidth
+                className="text-center bg-orange-600 leading-16 mt-1"
+                onClick={() => openLink(`/tracking/${item?.shipment?._id}`)}
+              >
+                Tracking Ship
+                <ArrowOutwardIcon />
+              </Button>
+            ) : null}
+          </Stack>
         );
       }
     } else {
@@ -153,9 +198,14 @@ const InvoiceTable = ({ mode }: { mode: "admin" | "user" }) => {
         <TableColumn key="address">address</TableColumn>
         <TableColumn key="paid">paid</TableColumn>
         <TableColumn key="product.name">product name</TableColumn>
+        <TableColumn key="shipment.status">shipment status</TableColumn>
         <TableColumn key="action">action</TableColumn>
       </TableHeader>
-      <TableBody items={items}>
+      <TableBody
+        items={items}
+        isLoading={loading}
+        loadingContent={<Spinner label="Loading..." />}
+      >
         {(item) => (
           <TableRow key={item._id}>
             {(columnKey) => (

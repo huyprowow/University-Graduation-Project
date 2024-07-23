@@ -1,25 +1,50 @@
 import { EmailTemplate } from "@/components/email-template";
 import mongodbConnect from "@/lib/mongodbConnect";
 import Invoice from "@/models/Invoice";
+import Shipment from "@/models/Shipment";
+import axios from "axios";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const GEOCODE_API_URL = `https://nominatim.openstreetmap.org/search?format=json&q=`;
+
 const handlerAddInvoice = async (req: Request, res: Response) => {
   try {
-    await mongodbConnect();
-    const { email, quantity, address, date, paid, product }: any =
-      await req.json();
-
+  await mongodbConnect();
+  const { email, quantity, address, date, paid, product }: any =
+    await req.json();
+  // Create a new shipment with the destination geolocation
+  // Geocode the address to get the coordinates
+  const response = await axios.get(
+    GEOCODE_API_URL + encodeURIComponent(address)
+  );
+  if (response.data.length > 0) {
+    const { lat, lon } = response.data[0];
+    console.log(response.data);
+    const shipment = await Shipment.create({
+      email,
+      address,
+      destinationLocation: {
+        type: "Point",
+        coordinates: [parseFloat(lon), parseFloat(lat)],
+      },
+      product,
+      status: "Pending",
+    });
     const newInvoice = new Invoice({
       email,
       quantity,
       address,
+      geolocation: {
+        type: "Point",
+        coordinates: [parseFloat(lon), parseFloat(lat)],
+      },
       paid,
       product,
+      shipment: shipment._id,
     });
     const savedInvoice = await newInvoice.save();
-
     const { data, error } = await resend.emails.send({
       from: "IAStore <onboarding@resend.dev>",
       to: [email],
@@ -35,6 +60,12 @@ const handlerAddInvoice = async (req: Request, res: Response) => {
         status: 201,
       }
     );
+  } else {
+    return NextResponse.json({
+      success: false,
+      message: "Geocoding failed: No results found",
+    });
+  }
   } catch (error) {
     return NextResponse.json(
       { success: false, error: error },
@@ -48,7 +79,10 @@ const handlerAddInvoice = async (req: Request, res: Response) => {
 const handlerGetInvoices = async (req: Request, res: Response) => {
   try {
     await mongodbConnect();
-    const Invoices = await Invoice.find().populate("product");
+    const Invoices = await Invoice.find()
+      .populate("product")
+      .populate("shipment")
+      .sort({ date: -1 });
 
     return NextResponse.json(
       { success: true, data: Invoices },

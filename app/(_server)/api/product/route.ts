@@ -9,66 +9,66 @@ import { NextResponse } from "next/server";
 // Create product
 const handlerAddProduct = async (req: Request, res: Response) => {
   try {
-    //   // Extract product data from request body
-    await mongodbConnect();
-    const milvusClient = await milvusdbConnect();
+  //   // Extract product data from request body
+  await mongodbConnect();
+  const milvusClient = await milvusdbConnect();
 
-    const formData = await req.formData();
-    const name = formData.get("name") as string;
-    const price = formData.get("price") as string;
-    const description = formData.get("description") as string;
-    const category = formData.get("category") as string;
-    const brand = formData.get("brand") as string;
-    const model = formData.get("model") as unknown as File;
-    const image = formData.get("image") as unknown as File;
-    const status = formData.get("status") as string;
-    const number = formData.get("number") as string;
+  const formData = await req.formData();
+  const name = formData.get("name") as string;
+  const price = formData.get("price") as string;
+  const description = formData.get("description") as string;
+  const category = formData.get("category") as string;
+  const brand = formData.get("brand") as string;
+  const model = formData.get("model") as unknown as File;
+  const image = formData.get("image") as unknown as File;
+  const status = formData.get("status") as string;
+  const number = formData.get("number") as string;
 
-    // Extract uploaded image file path
-    const [uploadImageResult, uploadModelResult]: [
-      uploadImageResult: any,
-      uploadModelResult: any
-    ] = await Promise.all([
-      UploadFile(image, "image"),
-      UploadFile(model, "model"),
-    ]);
+  // Extract uploaded image file path
+  const [uploadImageResult, uploadModelResult]: [
+    uploadImageResult: any,
+    uploadModelResult: any
+  ] = await Promise.all([
+    UploadFile(image, "image"),
+    UploadFile(model, "model"),
+  ]);
 
-    // Create new product instance
-    const product = new Product({
-      name,
-      price: +price,
-      image: {
-        image_url: uploadImageResult.secure_url,
-        cloudinary_public_id: uploadImageResult.public_id,
+  // Create new product instance
+  const product = new Product({
+    name,
+    price: +price,
+    image: {
+      image_url: uploadImageResult.secure_url,
+      cloudinary_public_id: uploadImageResult.public_id,
+    },
+    model: {
+      model_url: uploadModelResult.secure_url,
+      cloudinary_public_id: uploadModelResult.public_id,
+    },
+    status: status === "true" ? true : status === "false" ? false : status,
+    number: +number,
+    description,
+    category: category,
+    brand: brand,
+  });
+  const vector = await embeddingText(`${name} ${description}`);
+  // Save product to database
+  const savedProduct = await product.save();
+  const insert = await milvusClient.insert({
+    collection_name: COLLECTION_NAME,
+    data: [
+      {
+        productId: savedProduct._id.toString(),
+        vector,
       },
-      model: {
-        model_url: uploadModelResult.secure_url,
-        cloudinary_public_id: uploadModelResult.public_id,
-      },
-      status: status === "true" ? true : status === "false" ? false : status,
-      number: +number,
-      description,
-      category: category,
-      brand: brand,
-    });
-    const vector = await embeddingText(`${name} ${description}`);
-    // Save product to database
-    const savedProduct = await product.save();
-    const insert = await milvusClient.insert({
-      collection_name: COLLECTION_NAME,
-      data: [
-        {
-          productId: savedProduct._id.toString(),
-          vector,
-        },
-      ],
-    });
+    ],
+  });
 
-    // Send success response
-    return NextResponse.json(
-      { success: true, data: savedProduct, embedded: insert },
-      { status: 201 }
-    );
+  // Send success response
+  return NextResponse.json(
+    { success: true, data: savedProduct, embedded: insert },
+    { status: 201 }
+  );
   } catch (error) {
     // Handle error and send error response
     return NextResponse.json({ success: false, error: error }, { status: 500 });

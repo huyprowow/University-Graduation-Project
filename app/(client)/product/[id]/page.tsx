@@ -81,9 +81,10 @@ const ProductDetail = ({ params }: { params: { id: string } }) => {
               <Image
                 style={{
                   width: "100%",
+                  minWidth: 200,
                   minHeight: 400,
                 }}
-                loading={loading}
+                isLoading={loading}
                 alt="Image"
                 src={currentProduct?.image.image_url}
               />
@@ -115,7 +116,7 @@ const ProductDetail = ({ params }: { params: { id: string } }) => {
           )}
         </Grid>
         <Grid item xs={5} sm={4}>
-          <div class="min-w-[400]">
+          <div className="min-w-[400]">
             <Typography variant="h4" className="capitalize">
               {currentProduct?.name}
             </Typography>

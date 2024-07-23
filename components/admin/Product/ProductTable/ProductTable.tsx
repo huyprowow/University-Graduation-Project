@@ -20,6 +20,7 @@ import {
   ModalBody,
   ModalContent,
   Pagination,
+  Spinner,
   Table,
   TableBody,
   TableCell,
@@ -421,6 +422,8 @@ const ProductTable = () => {
           emptyContent={"No product found"}
           items={product}
           isLoading={loading}
+        loadingContent={<Spinner label="Loading..." />}
+
         >
           {(item) => (
             <TableRow key={item._id}>

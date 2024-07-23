@@ -7,7 +7,12 @@ const InvoiceSchema = new Schema(
     address: { type: String, required: true },
     date: { type: Date, default: Date.now },
     paid: { type: Boolean,require:true},
+    geolocation: {
+      type: { type: String, default: 'Point' },
+      coordinates: { type: [Number], default: [0, 0] },
+    },
     product: { type: Schema.Types.ObjectId, ref: "Product" },
+    shipment: { type: Schema.Types.ObjectId, ref: 'Shipment' },
   },
   { collection: "Invoice" }
 );

@@ -145,7 +145,7 @@ const HeaderNavBar = () => {
                   color="foreground"
                   href="/order"
                 >
-                  My Order
+                  Order
                 </Link>
               </DropdownItem>
 
